@@ -51,11 +51,26 @@ class EcoFlowAPI:
         # Generate nonce and timestamp (in seconds, UTC)
         # IMPORTANT: Use UTC time, not local time!
         from datetime import timezone
-        timestamp_sec = int(datetime.now(timezone.utc).timestamp())
+        import calendar
+        
+        # Try multiple methods to get timestamp
+        dt_now = datetime.now(timezone.utc)
+        timestamp_method1 = int(dt_now.timestamp())
+        timestamp_method2 = int(time.time())
+        timestamp_method3 = calendar.timegm(dt_now.timetuple())
+        
+        _LOGGER.debug(f"Timestamp debug:")
+        _LOGGER.debug(f"  datetime.now(UTC): {dt_now}")
+        _LOGGER.debug(f"  Method 1 (dt.timestamp()): {timestamp_method1}")
+        _LOGGER.debug(f"  Method 2 (time.time()): {timestamp_method2}")
+        _LOGGER.debug(f"  Method 3 (calendar.timegm): {timestamp_method3}")
+        
+        # Use time.time() as it should be most reliable
+        timestamp_sec = int(time.time())
         nonce = str(timestamp_sec)
         timestamp = str(timestamp_sec)
         
-        _LOGGER.debug(f"Current time check (UTC): {datetime.now(timezone.utc)} -> timestamp: {timestamp_sec}")
+        _LOGGER.debug(f"Using timestamp: {timestamp_sec}")
         
         # Generate signature
         signature = self._generate_signature(params, nonce, timestamp)
