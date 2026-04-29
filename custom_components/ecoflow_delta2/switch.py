@@ -75,6 +75,7 @@ class EcoFlowDelta2Switch(CoordinatorEntity, SwitchEntity):
         self._switch_info = switch_info
         self._attr_unique_id = f"{entry.data['device_sn']}_{switch_type}"
         self._attr_icon = switch_info["icon"]
+        self._attr_has_entity_name = True
         self._attr_translation_key = switch_type
         self._entry = entry
 
