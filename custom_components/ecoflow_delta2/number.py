@@ -85,6 +85,7 @@ class EcoFlowDelta2Number(CoordinatorEntity, NumberEntity):
         self._attr_native_step = number_info["step"]
         self._attr_icon = number_info["icon"]
         self._attr_mode = NumberMode.SLIDER
+        self._attr_has_entity_name = True
         self._attr_translation_key = number_type
         self._entry = entry
 
