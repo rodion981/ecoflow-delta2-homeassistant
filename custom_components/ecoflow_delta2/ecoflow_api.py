@@ -48,13 +48,14 @@ class EcoFlowAPI:
         if "sn" not in params:
             params["sn"] = self.device_sn
         
-        # Generate nonce and timestamp (in seconds, not milliseconds)
-        # Use datetime to ensure correct timestamp
-        timestamp_sec = int(datetime.now().timestamp())
+        # Generate nonce and timestamp (in seconds, UTC)
+        # IMPORTANT: Use UTC time, not local time!
+        from datetime import timezone
+        timestamp_sec = int(datetime.now(timezone.utc).timestamp())
         nonce = str(timestamp_sec)
         timestamp = str(timestamp_sec)
         
-        _LOGGER.debug(f"Current time check: {datetime.now()} -> timestamp: {timestamp_sec}")
+        _LOGGER.debug(f"Current time check (UTC): {datetime.now(timezone.utc)} -> timestamp: {timestamp_sec}")
         
         # Generate signature
         signature = self._generate_signature(params, nonce, timestamp)
