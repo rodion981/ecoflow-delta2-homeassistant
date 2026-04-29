@@ -594,7 +594,6 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         self._attr_state_class = sensor_info["state_class"]
         self._attr_icon = sensor_info["icon"]
         self._attr_entity_registry_enabled_default = sensor_info.get("enabled", True)
-        self._attr_has_entity_name = True
         self._attr_translation_key = sensor_type
         self._entry = entry
 
@@ -603,7 +602,7 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         """Return device information."""
         return {
             "identifiers": {(DOMAIN, self._entry.data["device_sn"])},
-            "name": f"EcoFlow Delta 2",
+            "name": "EcoFlow Delta 2",
             "manufacturer": "EcoFlow",
             "model": "Delta 2",
             "sw_version": "1.0",
