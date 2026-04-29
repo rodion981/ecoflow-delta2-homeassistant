@@ -34,7 +34,7 @@ SENSOR_TYPES = {
         "enabled": True,
     },
     "battery_temp": {
-        "name": "Battery Temp",
+        "name": "Battery Temperature",
         "key": "bms_bmsStatus.temp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -72,7 +72,7 @@ SENSOR_TYPES = {
         "enabled": True,
     },
     "soh": {
-        "name": "Battery SOH",
+        "name": "State of Health",
         "key": "bms_bmsStatus.soh",
         "unit": PERCENTAGE,
         "device_class": None,
@@ -110,7 +110,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "battery_temp_min": {
-        "name": "Battery Min Cell Temp",
+        "name": "Battery Min Cell Temperature",
         "key": "bms_bmsStatus.minCellTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -119,7 +119,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "battery_temp_max": {
-        "name": "Battery Max Cell Temp",
+        "name": "Battery Max Cell Temperature",
         "key": "bms_bmsStatus.maxCellTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -146,7 +146,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "battery_mos_temp_min": {
-        "name": "Battery Min MOS Temp",
+        "name": "Battery Min MOS Temperature",
         "key": "bms_bmsStatus.minMosTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -155,7 +155,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "battery_mos_temp_max": {
-        "name": "Battery Max MOS Temp",
+        "name": "Battery Max MOS Temperature",
         "key": "bms_bmsStatus.maxMosTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -166,7 +166,7 @@ SENSOR_TYPES = {
     
     # Power - Main - VISIBLE by default
     "input_watts": {
-        "name": "Total Input",
+        "name": "Total Input Power",
         "key": "pd.wattsInSum",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -175,7 +175,7 @@ SENSOR_TYPES = {
         "enabled": True,
     },
     "output_watts": {
-        "name": "Total Output",
+        "name": "Total Output Power",
         "key": "pd.wattsOutSum",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -184,7 +184,7 @@ SENSOR_TYPES = {
         "enabled": True,
     },
     "battery_input_watts": {
-        "name": "Battery Input",
+        "name": "Battery Input Power",
         "key": "bms_bmsStatus.inputWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -193,7 +193,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "battery_output_watts": {
-        "name": "Battery Output",
+        "name": "Battery Output Power",
         "key": "bms_bmsStatus.outputWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -204,7 +204,7 @@ SENSOR_TYPES = {
     
     # AC Input/Output - VISIBLE by default (main), HIDDEN (details)
     "ac_in_watts": {
-        "name": "AC Input",
+        "name": "AC Input Power",
         "key": "inv.inputWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -213,7 +213,7 @@ SENSOR_TYPES = {
         "enabled": True,
     },
     "ac_out_watts": {
-        "name": "AC Output",
+        "name": "AC Output Power",
         "key": "inv.outputWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -262,7 +262,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "ac_in_freq": {
-        "name": "AC Input Freq",
+        "name": "AC Input Frequency",
         "key": "inv.acInFreq",
         "unit": "Hz",
         "device_class": SensorDeviceClass.FREQUENCY,
@@ -271,7 +271,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "ac_out_freq": {
-        "name": "AC Output Freq",
+        "name": "AC Output Frequency",
         "key": "inv.invOutFreq",
         "unit": "Hz",
         "device_class": SensorDeviceClass.FREQUENCY,
@@ -280,7 +280,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "inv_out_temp": {
-        "name": "Inverter Temp",
+        "name": "Inverter Temperature",
         "key": "inv.outTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -291,7 +291,7 @@ SENSOR_TYPES = {
     
     # Solar/MPPT - VISIBLE (main), HIDDEN (details)
     "solar_in_watts": {
-        "name": "Solar Input",
+        "name": "Solar Input Power",
         "key": "mppt.inWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -300,7 +300,7 @@ SENSOR_TYPES = {
         "enabled": True,
     },
     "solar_in_volts": {
-        "name": "Solar Voltage",
+        "name": "Solar Input Voltage",
         "key": "mppt.inVol",
         "unit": UnitOfElectricPotential.VOLT,
         "device_class": SensorDeviceClass.VOLTAGE,
@@ -310,7 +310,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "solar_in_amps": {
-        "name": "Solar Current",
+        "name": "Solar Input Current",
         "key": "mppt.inAmp",
         "unit": UnitOfElectricCurrent.AMPERE,
         "device_class": SensorDeviceClass.CURRENT,
@@ -320,7 +320,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "mppt_temp": {
-        "name": "MPPT Temp",
+        "name": "MPPT Temperature",
         "key": "mppt.mpptTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -331,7 +331,7 @@ SENSOR_TYPES = {
     
     # DC Output - ALL HIDDEN by default
     "dc_out_watts": {
-        "name": "DC Output",
+        "name": "DC Output Power",
         "key": "mppt.outWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -340,7 +340,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "dc_out_volts": {
-        "name": "DC Voltage",
+        "name": "DC Output Voltage",
         "key": "mppt.outVol",
         "unit": UnitOfElectricPotential.VOLT,
         "device_class": SensorDeviceClass.VOLTAGE,
@@ -350,7 +350,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "dc_out_amps": {
-        "name": "DC Current",
+        "name": "DC Output Current",
         "key": "mppt.outAmp",
         "unit": UnitOfElectricCurrent.AMPERE,
         "device_class": SensorDeviceClass.CURRENT,
@@ -360,7 +360,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "dc_12v_watts": {
-        "name": "DC 12V Output",
+        "name": "DC 12V Output Power",
         "key": "mppt.dcdc12vWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -369,7 +369,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "car_watts": {
-        "name": "Car Port",
+        "name": "Car Port Power",
         "key": "pd.carWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
@@ -378,7 +378,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "car_temp": {
-        "name": "Car Port Temp",
+        "name": "Car Port Temperature",
         "key": "pd.carTemp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -443,7 +443,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "typec_1_temp": {
-        "name": "USB-C 1 Temp",
+        "name": "USB-C 1 Temperature",
         "key": "pd.typec1Temp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -452,7 +452,7 @@ SENSOR_TYPES = {
         "enabled": False,
     },
     "typec_2_temp": {
-        "name": "USB-C 2 Temp",
+        "name": "USB-C 2 Temperature",
         "key": "pd.typec2Temp",
         "unit": UnitOfTemperature.CELSIUS,
         "device_class": SensorDeviceClass.TEMPERATURE,
@@ -594,6 +594,7 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         self._attr_state_class = sensor_info["state_class"]
         self._attr_icon = sensor_info["icon"]
         self._attr_entity_registry_enabled_default = sensor_info.get("enabled", True)
+        self._attr_has_entity_name = True
         self._attr_translation_key = sensor_type
         self._entry = entry
 
