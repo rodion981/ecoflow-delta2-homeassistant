@@ -78,7 +78,6 @@ class EcoFlowDelta2Number(CoordinatorEntity, NumberEntity):
         self._api = api
         self._number_type = number_type
         self._number_info = number_info
-        self._attr_name = f"EcoFlow Delta 2 {number_info['name']}"
         self._attr_unique_id = f"{entry.data['device_sn']}_{number_type}"
         self._attr_native_unit_of_measurement = number_info["unit"]
         self._attr_native_min_value = number_info["min"]
@@ -86,6 +85,8 @@ class EcoFlowDelta2Number(CoordinatorEntity, NumberEntity):
         self._attr_native_step = number_info["step"]
         self._attr_icon = number_info["icon"]
         self._attr_mode = NumberMode.SLIDER
+        self._attr_has_entity_name = True
+        self._attr_translation_key = number_type
         self._entry = entry
 
     @property
