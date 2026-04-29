@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Налаштування EcoFlow Delta 2",
+        "description": "Введіть дані для підключення до EcoFlow API",
+        "data": {
+          "access_key": "Access Key",
+          "secret_key": "Secret Key",
+          "device_sn": "Серійний номер пристрою",
+          "region": "Регіон"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Не вдалося підключитися до EcoFlow API. Перевірте ваші дані.",
+      "unknown": "Невідома помилка"
+    },
+    "abort": {
+      "already_configured": "Цей пристрій вже налаштовано"
+    }
+  }
+}
