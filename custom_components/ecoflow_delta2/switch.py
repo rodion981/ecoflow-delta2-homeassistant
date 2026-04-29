@@ -15,25 +15,25 @@ from .const import DOMAIN
 SWITCH_TYPES = {
     "ac_enabled": {
         "name": "AC Output",
-        "key": "inv_cfgAcEnabled",
+        "key": "inv.cfgAcEnabled",
         "icon": "mdi:power-socket",
         "command": "set_ac_output",
     },
     "dc_enabled": {
         "name": "DC Output",
-        "key": "mppt_dcOutState",
+        "key": "pd.dcOutState",
         "icon": "mdi:car-battery",
         "command": "set_dc_output",
     },
     "xboost_enabled": {
         "name": "X-Boost",
-        "key": "inv_cfgAcXboost",
+        "key": "inv.cfgAcXboost",
         "icon": "mdi:lightning-bolt",
         "command": "set_xboost",
     },
     "beeper_enabled": {
         "name": "Beeper",
-        "key": "pd_beepMode",
+        "key": "pd.beepMode",
         "icon": "mdi:volume-high",
         "command": "set_beeper",
     },
