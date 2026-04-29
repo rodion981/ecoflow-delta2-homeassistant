@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure EcoFlow Delta 2",
+        "description": "Enter your EcoFlow API credentials",
+        "data": {
+          "access_key": "Access Key",
+          "secret_key": "Secret Key",
+          "device_sn": "Device Serial Number",
+          "region": "Region"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to EcoFlow API. Please check your credentials.",
+      "unknown": "Unknown error occurred"
+    },
+    "abort": {
+      "already_configured": "This device is already configured"
+    }
+  }
+}
