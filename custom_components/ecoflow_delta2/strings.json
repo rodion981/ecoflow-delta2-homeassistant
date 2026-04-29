@@ -1,0 +1,13 @@
+"""Strings for EcoFlow Delta 2 integration."""
+
+DOMAIN = "ecoflow_delta2"
+
+# Error messages
+ERROR_CANNOT_CONNECT = "cannot_connect"
+ERROR_UNKNOWN = "unknown"
+
+# Config flow
+CONF_ACCESS_KEY = "access_key"
+CONF_SECRET_KEY = "secret_key"
+CONF_DEVICE_SN = "device_sn"
+CONF_REGION = "region"
