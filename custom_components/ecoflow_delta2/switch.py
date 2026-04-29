@@ -95,15 +95,22 @@ class EcoFlowDelta2Switch(CoordinatorEntity, SwitchEntity):
         if self.coordinator.data is None:
             return False
         
-        # Navigate through nested dictionary using dot notation
-        keys = self._switch_info["key"].split(".")
-        value = self.coordinator.data
+        # EcoFlow API returns flat keys with dots (e.g., "inv.cfgAcEnabled")
+        # Try direct key access first
+        key = self._switch_info["key"]
         
-        for key in keys:
-            if isinstance(value, dict) and key in value:
-                value = value[key]
-            else:
-                return False
+        if key in self.coordinator.data:
+            value = self.coordinator.data[key]
+        else:
+            # Fallback: try nested dictionary navigation
+            keys = key.split(".")
+            value = self.coordinator.data
+            
+            for k in keys:
+                if isinstance(value, dict) and k in value:
+                    value = value[k]
+                else:
+                    return False
         
         return bool(value)
 
