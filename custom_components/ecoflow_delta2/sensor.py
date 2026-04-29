@@ -84,7 +84,7 @@ SENSOR_TYPES = {
     },
     "input_watts": {
         "name": "Total Input Power",
-        "key": "pd_wattsInSum",
+        "key": "pd.wattsInSum",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -92,7 +92,7 @@ SENSOR_TYPES = {
     },
     "output_watts": {
         "name": "Total Output Power",
-        "key": "pd_wattsOutSum",
+        "key": "pd.wattsOutSum",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -100,7 +100,7 @@ SENSOR_TYPES = {
     },
     "ac_in_watts": {
         "name": "AC Input Power",
-        "key": "inv_inputWatts",
+        "key": "inv.inputWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -108,7 +108,7 @@ SENSOR_TYPES = {
     },
     "ac_out_watts": {
         "name": "AC Output Power",
-        "key": "inv_outputWatts",
+        "key": "inv.outputWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -116,7 +116,7 @@ SENSOR_TYPES = {
     },
     "ac_in_volts": {
         "name": "AC Input Voltage",
-        "key": "inv_acInVol",
+        "key": "inv.acInVol",
         "unit": UnitOfElectricPotential.VOLT,
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -125,7 +125,7 @@ SENSOR_TYPES = {
     },
     "ac_out_volts": {
         "name": "AC Output Voltage",
-        "key": "inv_invOutVol",
+        "key": "inv.invOutVol",
         "unit": UnitOfElectricPotential.VOLT,
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -134,7 +134,7 @@ SENSOR_TYPES = {
     },
     "solar_in_watts": {
         "name": "Solar Input Power",
-        "key": "mppt_inWatts",
+        "key": "mppt.inWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -142,7 +142,7 @@ SENSOR_TYPES = {
     },
     "solar_in_volts": {
         "name": "Solar Input Voltage",
-        "key": "mppt_inVol",
+        "key": "mppt.inVol",
         "unit": UnitOfElectricPotential.VOLT,
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -151,7 +151,7 @@ SENSOR_TYPES = {
     },
     "dc_out_watts": {
         "name": "DC Output Power",
-        "key": "mppt_outWatts",
+        "key": "mppt.outWatts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -159,7 +159,7 @@ SENSOR_TYPES = {
     },
     "type_c_1_watts": {
         "name": "USB-C 1 Output Power",
-        "key": "pd_typec1Watts",
+        "key": "pd.typec1Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -167,7 +167,7 @@ SENSOR_TYPES = {
     },
     "type_c_2_watts": {
         "name": "USB-C 2 Output Power",
-        "key": "pd_typec2Watts",
+        "key": "pd.typec2Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -175,7 +175,7 @@ SENSOR_TYPES = {
     },
     "usb_a_1_watts": {
         "name": "USB-A 1 Output Power",
-        "key": "pd_usb1Watts",
+        "key": "pd.usb1Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
@@ -183,7 +183,7 @@ SENSOR_TYPES = {
     },
     "usb_a_2_watts": {
         "name": "USB-A 2 Output Power",
-        "key": "pd_usb2Watts",
+        "key": "pd.usb2Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
