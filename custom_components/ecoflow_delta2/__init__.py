@@ -36,7 +36,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER,
         name=f"EcoFlow Delta 2 {device_sn}",
         update_method=async_update_data,
-        update_interval=timedelta(seconds=30),
+        update_interval=timedelta(seconds=10),
     )
 
     await coordinator.async_config_entry_first_refresh()
