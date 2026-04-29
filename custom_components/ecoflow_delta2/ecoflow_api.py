@@ -4,6 +4,7 @@ import hmac
 import json
 import time
 import logging
+from datetime import datetime
 from typing import Any, Dict
 import requests
 
@@ -48,9 +49,12 @@ class EcoFlowAPI:
             params["sn"] = self.device_sn
         
         # Generate nonce and timestamp (in seconds, not milliseconds)
-        timestamp_sec = int(time.time())
+        # Use datetime to ensure correct timestamp
+        timestamp_sec = int(datetime.now().timestamp())
         nonce = str(timestamp_sec)
         timestamp = str(timestamp_sec)
+        
+        _LOGGER.debug(f"Current time check: {datetime.now()} -> timestamp: {timestamp_sec}")
         
         # Generate signature
         signature = self._generate_signature(params, nonce, timestamp)
