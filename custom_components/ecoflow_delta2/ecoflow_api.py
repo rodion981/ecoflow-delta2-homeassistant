@@ -49,28 +49,21 @@ class EcoFlowAPI:
             params["sn"] = self.device_sn
         
         # Generate nonce and timestamp (in seconds, UTC)
-        # IMPORTANT: Use UTC time, not local time!
-        from datetime import timezone
-        import calendar
+        # WORKAROUND: Python time is broken, calculate manually from system date
+        import subprocess
         
-        # Try multiple methods to get timestamp
-        dt_now = datetime.now(timezone.utc)
-        timestamp_method1 = int(dt_now.timestamp())
-        timestamp_method2 = int(time.time())
-        timestamp_method3 = calendar.timegm(dt_now.timetuple())
+        try:
+            # Get timestamp from system date command (more reliable)
+            result = subprocess.run(['date', '+%s'], capture_output=True, text=True, timeout=2)
+            timestamp_sec = int(result.stdout.strip())
+            _LOGGER.debug(f"Using system date command: {timestamp_sec}")
+        except Exception as e:
+            # Fallback to Python time (broken but better than nothing)
+            timestamp_sec = int(time.time())
+            _LOGGER.warning(f"Failed to get system timestamp, using Python time: {timestamp_sec}, error: {e}")
         
-        _LOGGER.debug(f"Timestamp debug:")
-        _LOGGER.debug(f"  datetime.now(UTC): {dt_now}")
-        _LOGGER.debug(f"  Method 1 (dt.timestamp()): {timestamp_method1}")
-        _LOGGER.debug(f"  Method 2 (time.time()): {timestamp_method2}")
-        _LOGGER.debug(f"  Method 3 (calendar.timegm): {timestamp_method3}")
-        
-        # Use time.time() as it should be most reliable
-        timestamp_sec = int(time.time())
         nonce = str(timestamp_sec)
         timestamp = str(timestamp_sec)
-        
-        _LOGGER.debug(f"Using timestamp: {timestamp_sec}")
         
         # Generate signature
         signature = self._generate_signature(params, nonce, timestamp)
