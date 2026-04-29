@@ -48,22 +48,15 @@ class EcoFlowAPI:
         if "sn" not in params:
             params["sn"] = self.device_sn
         
-        # Generate nonce and timestamp (in seconds, UTC)
-        # WORKAROUND: Python time is broken, calculate manually from system date
-        import subprocess
+        # Generate nonce and timestamp according to EcoFlow API requirements
+        # Nonce: 6-digit random number
+        # Timestamp: milliseconds (not seconds!)
+        import random
         
-        try:
-            # Get timestamp from system date command (more reliable)
-            result = subprocess.run(['date', '+%s'], capture_output=True, text=True, timeout=2)
-            timestamp_sec = int(result.stdout.strip())
-            _LOGGER.debug(f"Using system date command: {timestamp_sec}")
-        except Exception as e:
-            # Fallback to Python time (broken but better than nothing)
-            timestamp_sec = int(time.time())
-            _LOGGER.warning(f"Failed to get system timestamp, using Python time: {timestamp_sec}, error: {e}")
+        nonce = str(random.randint(100000, 999999))  # 6-digit random number
+        timestamp = str(int(time.time() * 1000))     # milliseconds
         
-        nonce = str(timestamp_sec)
-        timestamp = str(timestamp_sec)
+        _LOGGER.debug(f"Generated nonce: {nonce}, timestamp: {timestamp}")
         
         # Generate signature
         signature = self._generate_signature(params, nonce, timestamp)
