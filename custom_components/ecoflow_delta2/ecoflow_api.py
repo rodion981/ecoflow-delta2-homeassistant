@@ -168,3 +168,51 @@ class EcoFlowAPI:
             return response.get("code") == "0"
         except Exception:
             return False
+
+    def set_max_charge_soc(self, soc: int) -> bool:
+        """Set maximum charge level (50-100%)."""
+        params = {
+            "sn": self.device_sn,
+            "cmdCode": "WN511_SET_BAT_MAX_CAP",
+            "params": {
+                "maxChgSoc": soc
+            }
+        }
+        
+        try:
+            response = self._make_request("/iot-open/sign/device/quota", params, method="POST")
+            return response.get("code") == "0"
+        except Exception:
+            return False
+
+    def set_min_discharge_soc(self, soc: int) -> bool:
+        """Set minimum discharge level (0-30%)."""
+        params = {
+            "sn": self.device_sn,
+            "cmdCode": "WN511_SET_BAT_MIN_CAP",
+            "params": {
+                "minDsgSoc": soc
+            }
+        }
+        
+        try:
+            response = self._make_request("/iot-open/sign/device/quota", params, method="POST")
+            return response.get("code") == "0"
+        except Exception:
+            return False
+
+    def set_ac_charge_power(self, watts: int) -> bool:
+        """Set AC charging power limit (200-1200W)."""
+        params = {
+            "sn": self.device_sn,
+            "cmdCode": "WN511_SET_AC_CHG_WATTS",
+            "params": {
+                "chgWatts": watts
+            }
+        }
+        
+        try:
+            response = self._make_request("/iot-open/sign/device/quota", params, method="POST")
+            return response.get("code") == "0"
+        except Exception:
+            return False
