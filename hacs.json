@@ -1,0 +1,5 @@
+{
+  "name": "EcoFlow Delta 2 Integration",
+  "render_readme": true,
+  "homeassistant": "2023.1.0"
+}
