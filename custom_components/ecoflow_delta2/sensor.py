@@ -255,15 +255,22 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         if self.coordinator.data is None:
             return None
         
-        # Navigate through nested dictionary using dot notation
-        keys = self._sensor_info["key"].split(".")
-        value = self.coordinator.data
+        # EcoFlow API returns flat keys with dots (e.g., "bms_bmsStatus.soc")
+        # Try direct key access first
+        key = self._sensor_info["key"]
         
-        for key in keys:
-            if isinstance(value, dict) and key in value:
-                value = value[key]
-            else:
-                return None
+        if key in self.coordinator.data:
+            value = self.coordinator.data[key]
+        else:
+            # Fallback: try nested dictionary navigation
+            keys = key.split(".")
+            value = self.coordinator.data
+            
+            for k in keys:
+                if isinstance(value, dict) and k in value:
+                    value = value[k]
+                else:
+                    return None
         
         # Apply value transformation if defined
         if "value_fn" in self._sensor_info and value is not None:
