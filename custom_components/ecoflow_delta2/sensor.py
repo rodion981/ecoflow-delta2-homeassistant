@@ -1,4 +1,4 @@
-"""Sensor platform for EcoFlow Delta 2 - OPTIMIZED with short names and hidden sensors."""
+"""Sensor platform for EcoFlow Delta 2."""
 from __future__ import annotations
 
 from homeassistant.components.sensor import (
@@ -18,12 +18,12 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.entity import EntityCategory
 
 from .const import DOMAIN
 
 
 SENSOR_TYPES = {
-    # Battery Main Status - VISIBLE by default
     "battery_level": {
         "name": "Battery Level",
         "key": "bms_bmsStatus.soc",
@@ -31,7 +31,16 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.BATTERY,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:battery",
-        "enabled": True,
+        "entity_category": None,  # Main sensor
+    },
+    "battery_capacity_remain": {
+        "name": "Battery Capacity Remaining",
+        "key": "bms_bmsStatus.designCap",
+        "unit": "mAh",
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:battery-capacity",
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "battery_temp": {
         "name": "Battery Temperature",
@@ -40,7 +49,7 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.TEMPERATURE,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:thermometer",
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "battery_voltage": {
         "name": "Battery Voltage",
@@ -49,8 +58,8 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:lightning-bolt",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": True,
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "battery_current": {
         "name": "Battery Current",
@@ -59,8 +68,8 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.CURRENT,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:current-dc",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": True,
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "cycles": {
         "name": "Battery Cycles",
@@ -69,7 +78,7 @@ SENSOR_TYPES = {
         "device_class": None,
         "state_class": SensorStateClass.TOTAL_INCREASING,
         "icon": "mdi:counter",
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "soh": {
         "name": "State of Health",
@@ -78,93 +87,8 @@ SENSOR_TYPES = {
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:heart-pulse",
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
-    
-    # Battery Details - HIDDEN by default
-    "battery_capacity_remain": {
-        "name": "Battery Capacity Remaining",
-        "key": "bms_bmsStatus.remainCap",
-        "unit": "mAh",
-        "device_class": None,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-capacity",
-        "enabled": False,
-    },
-    "battery_capacity_design": {
-        "name": "Battery Design Capacity",
-        "key": "bms_bmsStatus.designCap",
-        "unit": "mAh",
-        "device_class": None,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-capacity",
-        "enabled": False,
-    },
-    "battery_capacity_full": {
-        "name": "Battery Full Capacity",
-        "key": "bms_bmsStatus.fullCap",
-        "unit": "mAh",
-        "device_class": None,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-capacity",
-        "enabled": False,
-    },
-    "battery_temp_min": {
-        "name": "Battery Min Cell Temperature",
-        "key": "bms_bmsStatus.minCellTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer-low",
-        "enabled": False,
-    },
-    "battery_temp_max": {
-        "name": "Battery Max Cell Temperature",
-        "key": "bms_bmsStatus.maxCellTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer-high",
-        "enabled": False,
-    },
-    "battery_cell_voltage_min": {
-        "name": "Battery Min Cell Voltage",
-        "key": "bms_bmsStatus.minCellVol",
-        "unit": UnitOfElectricPotential.MILLIVOLT,
-        "device_class": SensorDeviceClass.VOLTAGE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-low",
-        "enabled": False,
-    },
-    "battery_cell_voltage_max": {
-        "name": "Battery Max Cell Voltage",
-        "key": "bms_bmsStatus.maxCellVol",
-        "unit": UnitOfElectricPotential.MILLIVOLT,
-        "device_class": SensorDeviceClass.VOLTAGE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-high",
-        "enabled": False,
-    },
-    "battery_mos_temp_min": {
-        "name": "Battery Min MOS Temperature",
-        "key": "bms_bmsStatus.minMosTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    "battery_mos_temp_max": {
-        "name": "Battery Max MOS Temperature",
-        "key": "bms_bmsStatus.maxMosTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    
-    # Power - Main - VISIBLE by default
     "input_watts": {
         "name": "Total Input Power",
         "key": "pd.wattsInSum",
@@ -172,7 +96,7 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:transmission-tower-import",
-        "enabled": True,
+        "entity_category": None,  # Main sensor
     },
     "output_watts": {
         "name": "Total Output Power",
@@ -181,28 +105,8 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:transmission-tower-export",
-        "enabled": True,
+        "entity_category": None,  # Main sensor
     },
-    "battery_input_watts": {
-        "name": "Battery Input Power",
-        "key": "bms_bmsStatus.inputWatts",
-        "unit": UnitOfPower.WATT,
-        "device_class": SensorDeviceClass.POWER,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-charging",
-        "enabled": False,
-    },
-    "battery_output_watts": {
-        "name": "Battery Output Power",
-        "key": "bms_bmsStatus.outputWatts",
-        "unit": UnitOfPower.WATT,
-        "device_class": SensorDeviceClass.POWER,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:battery-minus",
-        "enabled": False,
-    },
-    
-    # AC Input/Output - VISIBLE by default (main), HIDDEN (details)
     "ac_in_watts": {
         "name": "AC Input Power",
         "key": "inv.inputWatts",
@@ -210,7 +114,7 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:power-plug",
-        "enabled": True,
+        "entity_category": None,  # Main sensor
     },
     "ac_out_watts": {
         "name": "AC Output Power",
@@ -219,7 +123,7 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:power-socket",
-        "enabled": True,
+        "entity_category": None,  # Main sensor
     },
     "ac_in_volts": {
         "name": "AC Input Voltage",
@@ -228,8 +132,8 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:sine-wave",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "ac_out_volts": {
         "name": "AC Output Voltage",
@@ -238,58 +142,9 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:sine-wave",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
-    "ac_in_amps": {
-        "name": "AC Input Current",
-        "key": "inv.acInAmp",
-        "unit": UnitOfElectricCurrent.AMPERE,
-        "device_class": SensorDeviceClass.CURRENT,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:current-ac",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
-    },
-    "ac_out_amps": {
-        "name": "AC Output Current",
-        "key": "inv.invOutAmp",
-        "unit": UnitOfElectricCurrent.AMPERE,
-        "device_class": SensorDeviceClass.CURRENT,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:current-ac",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
-    },
-    "ac_in_freq": {
-        "name": "AC Input Frequency",
-        "key": "inv.acInFreq",
-        "unit": "Hz",
-        "device_class": SensorDeviceClass.FREQUENCY,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:sine-wave",
-        "enabled": False,
-    },
-    "ac_out_freq": {
-        "name": "AC Output Frequency",
-        "key": "inv.invOutFreq",
-        "unit": "Hz",
-        "device_class": SensorDeviceClass.FREQUENCY,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:sine-wave",
-        "enabled": False,
-    },
-    "inv_out_temp": {
-        "name": "Inverter Temperature",
-        "key": "inv.outTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    
-    # Solar/MPPT - VISIBLE (main), HIDDEN (details)
     "solar_in_watts": {
         "name": "Solar Input Power",
         "key": "mppt.inWatts",
@@ -297,7 +152,7 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:solar-power",
-        "enabled": True,
+        "entity_category": None,  # Main sensor
     },
     "solar_in_volts": {
         "name": "Solar Input Voltage",
@@ -306,30 +161,9 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.VOLTAGE,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:solar-panel",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
-    "solar_in_amps": {
-        "name": "Solar Input Current",
-        "key": "mppt.inAmp",
-        "unit": UnitOfElectricCurrent.AMPERE,
-        "device_class": SensorDeviceClass.CURRENT,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:solar-power",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
-    },
-    "mppt_temp": {
-        "name": "MPPT Temperature",
-        "key": "mppt.mpptTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    
-    # DC Output - ALL HIDDEN by default
     "dc_out_watts": {
         "name": "DC Output Power",
         "key": "mppt.outWatts",
@@ -337,161 +171,53 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:car-battery",
-        "enabled": False,
+        "entity_category": None,  # Main sensor
     },
-    "dc_out_volts": {
-        "name": "DC Output Voltage",
-        "key": "mppt.outVol",
-        "unit": UnitOfElectricPotential.VOLT,
-        "device_class": SensorDeviceClass.VOLTAGE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:car-battery",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
-    },
-    "dc_out_amps": {
-        "name": "DC Output Current",
-        "key": "mppt.outAmp",
-        "unit": UnitOfElectricCurrent.AMPERE,
-        "device_class": SensorDeviceClass.CURRENT,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:current-dc",
-        "value_fn": lambda x: round(x / 1000, 2),
-        "enabled": False,
-    },
-    "dc_12v_watts": {
-        "name": "DC 12V Output Power",
-        "key": "mppt.dcdc12vWatts",
-        "unit": UnitOfPower.WATT,
-        "device_class": SensorDeviceClass.POWER,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:car-battery",
-        "enabled": False,
-    },
-    "car_watts": {
-        "name": "Car Port Power",
-        "key": "pd.carWatts",
-        "unit": UnitOfPower.WATT,
-        "device_class": SensorDeviceClass.POWER,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:car-electric",
-        "enabled": False,
-    },
-    "car_temp": {
-        "name": "Car Port Temperature",
-        "key": "pd.carTemp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    
-    # USB Ports - ALL HIDDEN by default
     "type_c_1_watts": {
-        "name": "USB-C 1",
+        "name": "USB-C 1 Output Power",
         "key": "pd.typec1Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:usb-port",
-        "enabled": False,
+        "entity_category": None,  # Main sensor
     },
     "type_c_2_watts": {
-        "name": "USB-C 2",
+        "name": "USB-C 2 Output Power",
         "key": "pd.typec2Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:usb-port",
-        "enabled": False,
+        "entity_category": None,  # Main sensor
     },
     "usb_a_1_watts": {
-        "name": "USB-A 1",
+        "name": "USB-A 1 Output Power",
         "key": "pd.usb1Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:usb-port",
-        "enabled": False,
+        "entity_category": None,  # Main sensor
     },
     "usb_a_2_watts": {
-        "name": "USB-A 2",
+        "name": "USB-A 2 Output Power",
         "key": "pd.usb2Watts",
         "unit": UnitOfPower.WATT,
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:usb-port",
-        "enabled": False,
+        "entity_category": None,  # Main sensor
     },
-    "usb_qc_1_watts": {
-        "name": "USB QC 1",
-        "key": "pd.qcUsb1Watts",
-        "unit": UnitOfPower.WATT,
-        "device_class": SensorDeviceClass.POWER,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:usb-port",
-        "enabled": False,
-    },
-    "usb_qc_2_watts": {
-        "name": "USB QC 2",
-        "key": "pd.qcUsb2Watts",
-        "unit": UnitOfPower.WATT,
-        "device_class": SensorDeviceClass.POWER,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:usb-port",
-        "enabled": False,
-    },
-    "typec_1_temp": {
-        "name": "USB-C 1 Temperature",
-        "key": "pd.typec1Temp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    "typec_2_temp": {
-        "name": "USB-C 2 Temperature",
-        "key": "pd.typec2Temp",
-        "unit": UnitOfTemperature.CELSIUS,
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:thermometer",
-        "enabled": False,
-    },
-    
-    # Time & Usage - VISIBLE (main), HIDDEN (stats)
     "remain_time": {
         "name": "Remaining Time",
-        "key": "pd.remainTime",
+        "key": "bms_bmsStatus.remainTime",
         "unit": UnitOfTime.MINUTES,
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:timer-outline",
-        "value_fn": lambda x: abs(x),
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
-    "inv_used_time": {
-        "name": "Inverter Used Time",
-        "key": "pd.invUsedTime",
-        "unit": UnitOfTime.MINUTES,
-        "device_class": None,
-        "state_class": SensorStateClass.TOTAL_INCREASING,
-        "icon": "mdi:timer",
-        "enabled": False,
-    },
-    "mppt_used_time": {
-        "name": "MPPT Used Time",
-        "key": "pd.mpptUsedTime",
-        "unit": UnitOfTime.MINUTES,
-        "device_class": None,
-        "state_class": SensorStateClass.TOTAL_INCREASING,
-        "icon": "mdi:timer",
-        "enabled": False,
-    },
-    
-    # Settings & Configuration - VISIBLE (adjustable), HIDDEN (info)
     "max_charge_soc": {
         "name": "Max Charge Level",
         "key": "bms_emsStatus.maxChargeSoc",
@@ -499,7 +225,7 @@ SENSOR_TYPES = {
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:battery-charging-100",
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "min_discharge_soc": {
         "name": "Min Discharge Level",
@@ -508,7 +234,7 @@ SENSOR_TYPES = {
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:battery-charging-outline",
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "charge_power_limit": {
         "name": "Charge Power Limit",
@@ -517,7 +243,7 @@ SENSOR_TYPES = {
         "device_class": SensorDeviceClass.POWER,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:flash",
-        "enabled": True,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "lcd_timeout": {
         "name": "LCD Timeout",
@@ -526,7 +252,7 @@ SENSOR_TYPES = {
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:monitor",
-        "enabled": False,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "ac_standby_time": {
         "name": "AC Standby Time",
@@ -535,25 +261,187 @@ SENSOR_TYPES = {
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
         "icon": "mdi:timer-sand",
-        "enabled": False,
+        "entity_category": EntityCategory.DIAGNOSTIC,
     },
-    "brightness_level": {
-        "name": "Screen Brightness",
-        "key": "pd.brightLevel",
-        "unit": None,
+    # Additional battery sensors
+    "battery_full_capacity": {
+        "name": "Battery Full Capacity",
+        "key": "bms_bmsStatus.fullCap",
+        "unit": "mAh",
         "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:brightness-6",
-        "enabled": False,
+        "icon": "mdi:battery-capacity",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
     },
-    "wifi_rssi": {
-        "name": "WiFi Signal",
-        "key": "pd.wifiRssi",
-        "unit": "dBm",
-        "device_class": SensorDeviceClass.SIGNAL_STRENGTH,
+    "battery_remain_capacity": {
+        "name": "Battery Remain Capacity",
+        "key": "bms_bmsStatus.remainCap",
+        "unit": "mAh",
+        "device_class": None,
         "state_class": SensorStateClass.MEASUREMENT,
-        "icon": "mdi:wifi",
-        "enabled": False,
+        "icon": "mdi:battery-capacity",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    "battery_min_cell_temp": {
+        "name": "Battery Min Cell Temperature",
+        "key": "bms_bmsStatus.minCellTemp",
+        "unit": UnitOfTemperature.CELSIUS,
+        "device_class": SensorDeviceClass.TEMPERATURE,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:thermometer-low",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    "battery_max_cell_temp": {
+        "name": "Battery Max Cell Temperature",
+        "key": "bms_bmsStatus.maxCellTemp",
+        "unit": UnitOfTemperature.CELSIUS,
+        "device_class": SensorDeviceClass.TEMPERATURE,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:thermometer-high",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    "battery_min_cell_voltage": {
+        "name": "Battery Min Cell Voltage",
+        "key": "bms_bmsStatus.minCellVol",
+        "unit": UnitOfElectricPotential.VOLT,
+        "device_class": SensorDeviceClass.VOLTAGE,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:flash-triangle",
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    "battery_max_cell_voltage": {
+        "name": "Battery Max Cell Voltage",
+        "key": "bms_bmsStatus.maxCellVol",
+        "unit": UnitOfElectricPotential.VOLT,
+        "device_class": SensorDeviceClass.VOLTAGE,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:flash-triangle",
+        "value_fn": lambda x: x / 1000,
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    # Charging state sensors
+    "charge_state": {
+        "name": "Charge State",
+        "key": "bms_emsStatus.chgState",
+        "unit": None,
+        "device_class": None,
+        "state_class": None,
+        "icon": "mdi:battery-charging",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "charge_remain_time": {
+        "name": "Charge Remaining Time",
+        "key": "bms_emsStatus.chgRemainTime",
+        "unit": UnitOfTime.MINUTES,
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:timer-plus",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "discharge_remain_time": {
+        "name": "Discharge Remaining Time",
+        "key": "bms_emsStatus.dsgRemainTime",
+        "unit": UnitOfTime.MINUTES,
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:timer-minus",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    # Inverter temperature
+    "inverter_temp": {
+        "name": "Inverter Temperature",
+        "key": "inv.outTemp",
+        "unit": UnitOfTemperature.CELSIUS,
+        "device_class": SensorDeviceClass.TEMPERATURE,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:thermometer",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    # Backup reserve settings
+    "backup_reserve_level": {
+        "name": "Backup Reserve Level",
+        "key": "pd.bpPowerSoc",
+        "unit": PERCENTAGE,
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:battery-heart",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "backup_reserve_enabled": {
+        "name": "Backup Reserve Enabled",
+        "key": "pd.watchIsConfig",
+        "unit": None,
+        "device_class": None,
+        "state_class": None,
+        "icon": "mdi:shield-check",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    # Generator auto start/stop
+    "generator_auto_start_level": {
+        "name": "Generator Auto Start Level",
+        "key": "bms_emsStatus.minOpenOilEb",
+        "unit": PERCENTAGE,
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:engine",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    "generator_auto_stop_level": {
+        "name": "Generator Auto Stop Level",
+        "key": "bms_emsStatus.maxCloseOilEb",
+        "unit": PERCENTAGE,
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:engine-off",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
+    },
+    # Other settings
+    "solar_charging_priority": {
+        "name": "Solar Charging Priority",
+        "key": "pd.pvChgPrioSet",
+        "unit": None,
+        "device_class": None,
+        "state_class": None,
+        "icon": "mdi:solar-power-variant",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "ac_always_on": {
+        "name": "AC Always On",
+        "key": "pd.acAutoOutConfig",
+        "unit": None,
+        "device_class": None,
+        "state_class": None,
+        "icon": "mdi:power-plug",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "car_charger_state": {
+        "name": "12V Car Port State",
+        "key": "pd.carState",
+        "unit": None,
+        "device_class": None,
+        "state_class": None,
+        "icon": "mdi:car-electric",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "unit_timeout": {
+        "name": "Unit Timeout",
+        "key": "pd.standbyMin",
+        "unit": UnitOfTime.MINUTES,
+        "device_class": None,
+        "state_class": SensorStateClass.MEASUREMENT,
+        "icon": "mdi:timer-off",
+        "entity_category": EntityCategory.DIAGNOSTIC,
+        "entity_registry_enabled_default": False,
     },
 }
 
@@ -588,14 +476,14 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._sensor_type = sensor_type
         self._sensor_info = sensor_info
+        self._attr_name = f"EcoFlow Delta 2 {sensor_info['name']}"
         self._attr_unique_id = f"{entry.data['device_sn']}_{sensor_type}"
         self._attr_native_unit_of_measurement = sensor_info["unit"]
         self._attr_device_class = sensor_info["device_class"]
         self._attr_state_class = sensor_info["state_class"]
         self._attr_icon = sensor_info["icon"]
-        self._attr_entity_registry_enabled_default = sensor_info.get("enabled", True)
-        self._attr_has_entity_name = True
-        self._attr_translation_key = sensor_type
+        self._attr_entity_category = sensor_info.get("entity_category")
+        self._attr_entity_registry_enabled_default = sensor_info.get("entity_registry_enabled_default", True)
         self._entry = entry
 
     @property
@@ -603,7 +491,7 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         """Return device information."""
         return {
             "identifiers": {(DOMAIN, self._entry.data["device_sn"])},
-            "name": "EcoFlow Delta 2",
+            "name": f"EcoFlow Delta 2 {self._entry.data['device_sn']}",
             "manufacturer": "EcoFlow",
             "model": "Delta 2",
             "sw_version": "1.0",
@@ -615,7 +503,8 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         if self.coordinator.data is None:
             return None
         
-        # EcoFlow API returns flat keys with dots
+        # EcoFlow API returns flat keys with dots (e.g., "bms_bmsStatus.soc")
+        # Try direct key access first
         key = self._sensor_info["key"]
         
         if key in self.coordinator.data:
