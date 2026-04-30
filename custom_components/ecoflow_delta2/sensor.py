@@ -476,7 +476,6 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._sensor_type = sensor_type
         self._sensor_info = sensor_info
-        self._attr_name = f"EcoFlow Delta 2 {sensor_info['name']}"
         self._attr_unique_id = f"{entry.data['device_sn']}_{sensor_type}"
         self._attr_native_unit_of_measurement = sensor_info["unit"]
         self._attr_device_class = sensor_info["device_class"]
@@ -484,6 +483,8 @@ class EcoFlowDelta2Sensor(CoordinatorEntity, SensorEntity):
         self._attr_icon = sensor_info["icon"]
         self._attr_entity_category = sensor_info.get("entity_category")
         self._attr_entity_registry_enabled_default = sensor_info.get("entity_registry_enabled_default", True)
+        self._attr_has_entity_name = True
+        self._attr_translation_key = sensor_type
         self._entry = entry
 
     @property
