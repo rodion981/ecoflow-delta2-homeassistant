@@ -189,6 +189,60 @@
       },
       "wifi_rssi": {
         "name": "Сигнал WiFi"
+      },
+      "battery_full_capacity": {
+        "name": "Повна ємність батареї"
+      },
+      "battery_remain_capacity": {
+        "name": "Залишкова ємність батареї"
+      },
+      "battery_min_cell_temp": {
+        "name": "Мін. температура комірки"
+      },
+      "battery_max_cell_temp": {
+        "name": "Макс. температура комірки"
+      },
+      "battery_min_cell_voltage": {
+        "name": "Мін. напруга комірки"
+      },
+      "battery_max_cell_voltage": {
+        "name": "Макс. напруга комірки"
+      },
+      "charge_state": {
+        "name": "Стан заряду"
+      },
+      "charge_remain_time": {
+        "name": "Час до повного заряду"
+      },
+      "discharge_remain_time": {
+        "name": "Час до повного розряду"
+      },
+      "inverter_temp": {
+        "name": "Температура інвертора"
+      },
+      "backup_reserve_level": {
+        "name": "Рівень резервного живлення"
+      },
+      "backup_reserve_enabled": {
+        "name": "Резервне живлення увімкнено"
+      },
+      "generator_auto_start_level": {
+        "name": "Рівень автозапуску генератора"
+      },
+      "generator_auto_stop_level": {
+        "name": "Рівень автозупинки генератора"
+      },
+      "solar_charging_priority": {
+        "name": "Пріоритет сонячного заряду"
+      },
+      "ac_always_on": {
+        "name": "AC завжди увімкнено"
+      },
+      "car_charger_state": {
+        "name": "Стан 12V порту"
+      },
+      "unit_timeout": {
+        "name": "Таймаут пристрою"
       }
     },
     "switch": {
