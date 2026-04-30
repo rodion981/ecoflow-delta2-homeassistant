@@ -1,0 +1,309 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Налаштування EcoFlow Delta 2",
+        "description": "Введіть дані для підключення до EcoFlow API",
+        "data": {
+          "access_key": "Access Key",
+          "secret_key": "Secret Key",
+          "device_sn": "Серійний номер пристрою",
+          "region": "Регіон"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Не вдалося підключитися до EcoFlow API. Перевірте ваші дані.",
+      "unknown": "Невідома помилка"
+    },
+    "abort": {
+      "already_configured": "Цей пристрій вже налаштовано"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "battery_level": {
+        "name": "Рівень батареї"
+      },
+      "battery_temp": {
+        "name": "Температура батареї"
+      },
+      "battery_voltage": {
+        "name": "Напруга батареї"
+      },
+      "battery_current": {
+        "name": "Струм батареї"
+      },
+      "cycles": {
+        "name": "Цикли заряду"
+      },
+      "soh": {
+        "name": "Стан здоров'я"
+      },
+      "battery_capacity_remain": {
+        "name": "Залишкова ємність"
+      },
+      "battery_capacity_design": {
+        "name": "Проектна ємність"
+      },
+      "battery_capacity_full": {
+        "name": "Повна ємність"
+      },
+      "battery_temp_min": {
+        "name": "Мін. температура комірки"
+      },
+      "battery_temp_max": {
+        "name": "Макс. температура комірки"
+      },
+      "battery_cell_voltage_min": {
+        "name": "Мін. напруга комірки"
+      },
+      "battery_cell_voltage_max": {
+        "name": "Макс. напруга комірки"
+      },
+      "battery_mos_temp_min": {
+        "name": "Мін. температура MOS"
+      },
+      "battery_mos_temp_max": {
+        "name": "Макс. температура MOS"
+      },
+      "input_watts": {
+        "name": "Загальна вхідна потужність"
+      },
+      "output_watts": {
+        "name": "Загальна вихідна потужність"
+      },
+      "battery_input_watts": {
+        "name": "Потужність заряду батареї"
+      },
+      "battery_output_watts": {
+        "name": "Потужність розряду батареї"
+      },
+      "ac_in_watts": {
+        "name": "Потужність AC входу"
+      },
+      "ac_out_watts": {
+        "name": "Потужність AC виходу"
+      },
+      "ac_in_volts": {
+        "name": "Напруга AC входу"
+      },
+      "ac_out_volts": {
+        "name": "Напруга AC виходу"
+      },
+      "ac_in_amps": {
+        "name": "Струм AC входу"
+      },
+      "ac_out_amps": {
+        "name": "Струм AC виходу"
+      },
+      "ac_in_freq": {
+        "name": "Частота AC входу"
+      },
+      "ac_out_freq": {
+        "name": "Частота AC виходу"
+      },
+      "inv_out_temp": {
+        "name": "Температура інвертора"
+      },
+      "solar_in_watts": {
+        "name": "Потужність сонячних панелей"
+      },
+      "solar_in_volts": {
+        "name": "Напруга сонячних панелей"
+      },
+      "solar_in_amps": {
+        "name": "Струм сонячних панелей"
+      },
+      "mppt_temp": {
+        "name": "Температура MPPT"
+      },
+      "dc_out_watts": {
+        "name": "Потужність DC виходу"
+      },
+      "dc_out_volts": {
+        "name": "Напруга DC виходу"
+      },
+      "dc_out_amps": {
+        "name": "Струм DC виходу"
+      },
+      "dc_12v_watts": {
+        "name": "DC 12V вихід"
+      },
+      "car_watts": {
+        "name": "Автомобільний порт"
+      },
+      "car_temp": {
+        "name": "Температура авто порту"
+      },
+      "type_c_1_watts": {
+        "name": "USB-C 1"
+      },
+      "type_c_2_watts": {
+        "name": "USB-C 2"
+      },
+      "usb_a_1_watts": {
+        "name": "USB-A 1"
+      },
+      "usb_a_2_watts": {
+        "name": "USB-A 2"
+      },
+      "usb_qc_1_watts": {
+        "name": "USB QC 1"
+      },
+      "usb_qc_2_watts": {
+        "name": "USB QC 2"
+      },
+      "typec_1_temp": {
+        "name": "Температура USB-C 1"
+      },
+      "typec_2_temp": {
+        "name": "Температура USB-C 2"
+      },
+      "remain_time": {
+        "name": "Залишковий час"
+      },
+      "inv_used_time": {
+        "name": "Час роботи інвертора"
+      },
+      "mppt_used_time": {
+        "name": "Час роботи MPPT"
+      },
+      "max_charge_soc": {
+        "name": "Макс. рівень заряду"
+      },
+      "min_discharge_soc": {
+        "name": "Мін. рівень розряду"
+      },
+      "charge_power_limit": {
+        "name": "Ліміт потужності заряду"
+      },
+      "lcd_timeout": {
+        "name": "Час вимкнення екрану"
+      },
+      "ac_standby_time": {
+        "name": "Час очікування AC"
+      },
+      "brightness_level": {
+        "name": "Яскравість екрану"
+      },
+      "wifi_rssi": {
+        "name": "Сигнал WiFi"
+      },
+      "battery_full_capacity": {
+        "name": "Повна ємність батареї"
+      },
+      "battery_remain_capacity": {
+        "name": "Залишкова ємність батареї"
+      },
+      "battery_min_cell_temp": {
+        "name": "Мін. температура комірки"
+      },
+      "battery_max_cell_temp": {
+        "name": "Макс. температура комірки"
+      },
+      "battery_min_cell_voltage": {
+        "name": "Мін. напруга комірки"
+      },
+      "battery_max_cell_voltage": {
+        "name": "Макс. напруга комірки"
+      },
+      "charge_state": {
+        "name": "Стан заряду"
+      },
+      "charge_remain_time": {
+        "name": "Час до повного заряду"
+      },
+      "discharge_remain_time": {
+        "name": "Час до повного розряду"
+      },
+      "inverter_temp": {
+        "name": "Температура інвертора"
+      },
+      "backup_reserve_level": {
+        "name": "Рівень резервного живлення"
+      },
+      "backup_reserve_enabled": {
+        "name": "Резервне живлення увімкнено"
+      },
+      "generator_auto_start_level": {
+        "name": "Рівень автозапуску генератора"
+      },
+      "generator_auto_stop_level": {
+        "name": "Рівень автозупинки генератора"
+      },
+      "solar_charging_priority": {
+        "name": "Пріоритет сонячного заряду"
+      },
+      "ac_always_on": {
+        "name": "AC завжди увімкнено"
+      },
+      "car_charger_state": {
+        "name": "Стан 12V порту"
+      },
+      "unit_timeout": {
+        "name": "Таймаут пристрою"
+      }
+    },
+    "switch": {
+      "ac_enabled": {
+        "name": "AC вихід"
+      },
+      "dc_enabled": {
+        "name": "DC вихід"
+      },
+      "xboost_enabled": {
+        "name": "X-Boost"
+      },
+      "beeper_enabled": {
+        "name": "Звуковий сигнал"
+      },
+      "backup_reserve_enabled": {
+        "name": "Резервне живлення"
+      },
+      "solar_charging_priority": {
+        "name": "Пріоритет сонячного заряду"
+      },
+      "ac_always_on": {
+        "name": "AC завжди увімкнено"
+      }
+    },
+    "number": {
+      "max_charge_soc": {
+        "name": "Макс. рівень заряду"
+      },
+      "min_discharge_soc": {
+        "name": "Мін. рівень розряду"
+      },
+      "charge_power_ac": {
+        "name": "Ліміт потужності AC заряду"
+      },
+      "backup_reserve_level": {
+        "name": "Рівень резервного живлення"
+      },
+      "generator_auto_start_level": {
+        "name": "Рівень автозапуску генератора"
+      },
+      "generator_auto_stop_level": {
+        "name": "Рівень автозупинки генератора"
+      }
+    },
+    "select": {
+      "screen_timeout": {
+        "name": "Таймаут екрану"
+      },
+      "ac_timeout": {
+        "name": "Таймаут AC"
+      },
+      "dc_timeout": {
+        "name": "Таймаут DC"
+      },
+      "unit_timeout": {
+        "name": "Таймаут пристрою"
+      },
+      "dc_charge_current": {
+        "name": "Струм DC заряду"
+      }
+    }
+  }
+}
