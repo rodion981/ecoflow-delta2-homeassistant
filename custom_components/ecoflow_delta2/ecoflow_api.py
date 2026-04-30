@@ -27,15 +27,13 @@ class EcoFlowAPI:
     def _generate_signature(self, params: Dict[str, Any], nonce: str, timestamp: str, method: str = "GET") -> str:
         """Generate HMAC signature for API request."""
         if method == "GET":
-            # GET: only sn + accessKey + nonce + timestamp
-            sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            # GET: only accessKey + nonce + timestamp (without sn)
+            sign_str = f"accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         else:
-            # POST: try including cmdCode in signature
-            # Format: sn + cmdCode + accessKey + nonce + timestamp
-            if 'cmdCode' in params:
-                sign_str = f"sn={params['sn']}&cmdCode={params['cmdCode']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
-            else:
-                sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            # POST: include all params as JSON string
+            # Format: {params_json}&accessKey={key}&nonce={nonce}&timestamp={timestamp}
+            params_json = json.dumps(params, separators=(',', ':'), ensure_ascii=False)
+            sign_str = f"{params_json}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         
         _LOGGER.debug(f"Sign string for {method}: {sign_str}")
         
