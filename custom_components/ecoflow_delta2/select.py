@@ -162,6 +162,10 @@ class EcoFlowDelta2Select(CoordinatorEntity, SelectEntity):
 
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
+        import logging
+        _LOGGER = logging.getLogger(__name__)
+        _LOGGER.info(f"Setting {self._select_type} to {option}")
+        
         # Find the value for the selected label
         selected_value = None
         for option_data in self._select_info["options"].values():
@@ -170,6 +174,7 @@ class EcoFlowDelta2Select(CoordinatorEntity, SelectEntity):
                 break
         
         if selected_value is None:
+            _LOGGER.error(f"Invalid option {option} for {self._select_type}")
             return
         
         # Build command parameters
@@ -184,6 +189,8 @@ class EcoFlowDelta2Select(CoordinatorEntity, SelectEntity):
             }
         }
         
+        _LOGGER.debug(f"Sending command: {params}")
+        
         # Send command via API
         try:
             response = await self.hass.async_add_executor_job(
@@ -193,9 +200,11 @@ class EcoFlowDelta2Select(CoordinatorEntity, SelectEntity):
                 "POST"
             )
             
+            _LOGGER.info(f"API response for {self._select_type}: {response}")
+            
             if response.get("code") == "0":
                 await self.coordinator.async_request_refresh()
+            else:
+                _LOGGER.error(f"API returned error code for {self._select_type}: {response}")
         except Exception as e:
-            import logging
-            _LOGGER = logging.getLogger(__name__)
-            _LOGGER.error(f"Failed to set {self._select_type}: {e}")
+            _LOGGER.error(f"Failed to set {self._select_type}: {e}", exc_info=True)
