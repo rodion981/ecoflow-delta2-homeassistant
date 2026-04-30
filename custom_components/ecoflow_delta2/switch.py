@@ -117,16 +117,32 @@ class EcoFlowDelta2Switch(CoordinatorEntity, SwitchEntity):
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the switch on."""
+        import logging
+        _LOGGER = logging.getLogger(__name__)
+        _LOGGER.info(f"Turning ON {self._switch_type}")
+        
         command = getattr(self._api, self._switch_info["command"])
         success = await self.hass.async_add_executor_job(command, True)
         
-        if success:
-            await self.coordinator.async_request_refresh()
-
-    async def async_turn_off(self, **kwargs: Any) -> None:
-        """Turn the switch off."""
-        command = getattr(self._api, self._switch_info["command"])
-        success = await self.hass.async_add_executor_job(command, False)
+        _LOGGER.info(f"Command result for {self._switch_type}: {success}")
         
         if success:
             await self.coordinator.async_request_refresh()
+        else:
+            _LOGGER.error(f"Failed to turn on {self._switch_type}")
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        """Turn the switch off."""
+        import logging
+        _LOGGER = logging.getLogger(__name__)
+        _LOGGER.info(f"Turning OFF {self._switch_type}")
+        
+        command = getattr(self._api, self._switch_info["command"])
+        success = await self.hass.async_add_executor_job(command, False)
+        
+        _LOGGER.info(f"Command result for {self._switch_type}: {success}")
+        
+        if success:
+            await self.coordinator.async_request_refresh()
+        else:
+            _LOGGER.error(f"Failed to turn off {self._switch_type}")
