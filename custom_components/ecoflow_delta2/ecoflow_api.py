@@ -26,15 +26,16 @@ class EcoFlowAPI:
 
     def _generate_signature(self, params: Dict[str, Any], nonce: str, timestamp: str, method: str = "GET") -> str:
         """Generate HMAC signature for API request."""
-        # For GET requests: use original format that worked
-        # For POST requests: try with full JSON params
         if method == "GET":
-            # Original format that worked: sn first, then accessKey, nonce, timestamp
+            # GET: only sn + accessKey + nonce + timestamp
             sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         else:
-            # For POST, try including the full params as JSON string
-            params_json = json.dumps(params, separators=(',', ':'), ensure_ascii=False, sort_keys=True)
-            sign_str = f"{params_json}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            # POST: try including cmdCode in signature
+            # Format: sn + cmdCode + accessKey + nonce + timestamp
+            if 'cmdCode' in params:
+                sign_str = f"sn={params['sn']}&cmdCode={params['cmdCode']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            else:
+                sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         
         _LOGGER.debug(f"Sign string for {method}: {sign_str}")
         
@@ -230,3 +231,4 @@ class EcoFlowAPI:
             return response.get("code") == "0"
         except Exception:
             return False
+
