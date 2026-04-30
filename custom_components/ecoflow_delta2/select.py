@@ -44,23 +44,6 @@ DC_TIMEOUT_OPTIONS = {
     "12hr": {"value": 720, "label": "12 hours"},
 }
 
-UNIT_TIMEOUT_OPTIONS = {
-    "never": {"value": 0, "label": "Never"},
-    "30min": {"value": 30, "label": "30 minutes"},
-    "1hr": {"value": 60, "label": "1 hour"},
-    "2hr": {"value": 120, "label": "2 hours"},
-    "4hr": {"value": 240, "label": "4 hours"},
-    "6hr": {"value": 360, "label": "6 hours"},
-    "12hr": {"value": 720, "label": "12 hours"},
-    "24hr": {"value": 1440, "label": "24 hours"},
-}
-
-DC_CHARGE_CURRENT_OPTIONS = {
-    "4a": {"value": 4000, "label": "4A"},
-    "6a": {"value": 6000, "label": "6A"},
-    "8a": {"value": 8000, "label": "8A"},
-}
-
 SELECT_TYPES = {
     "screen_timeout": {
         "name": "Screen Timeout",
@@ -88,24 +71,6 @@ SELECT_TYPES = {
         "command": "set_dc_timeout",
         "cmd_code": "WN511_SET_DC_STANDBY_TIME",
         "param_name": "standByMode",
-    },
-    "unit_timeout": {
-        "name": "Unit Timeout",
-        "key": "pd.standbyMin",
-        "options": UNIT_TIMEOUT_OPTIONS,
-        "icon": "mdi:timer-off",
-        "command": "set_unit_timeout",
-        "cmd_code": "WN511_SET_UNIT_TIMEOUT",
-        "param_name": "standbyMin",
-    },
-    "dc_charge_current": {
-        "name": "DC Charge Current",
-        "key": "mppt.dcChgCurrent",
-        "options": DC_CHARGE_CURRENT_OPTIONS,
-        "icon": "mdi:current-dc",
-        "command": "set_dc_charge_current",
-        "cmd_code": "WN511_SET_DC_CHARGE_CURRENT",
-        "param_name": "dcChgCfg",
     },
 }
 
