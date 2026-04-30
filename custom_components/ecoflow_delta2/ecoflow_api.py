@@ -30,12 +30,11 @@ class EcoFlowAPI:
             # GET: sn + accessKey + nonce + timestamp
             sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         else:
-            # POST: include all params as JSON string
-            # Format: {params_json}&accessKey={key}&nonce={nonce}&timestamp={timestamp}
-            params_json = json.dumps(params, separators=(',', ':'), ensure_ascii=False)
-            sign_str = f"{params_json}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            # POST: try same format as GET (without params JSON)
+            # Format: accessKey + nonce + timestamp
+            sign_str = f"accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         
-        _LOGGER.debug(f"Sign string for {method}: {sign_str}")
+        _LOGGER.info(f"Sign string for {method}: {sign_str}")
         
         # Generate HMAC-SHA256 signature
         signature = hmac.new(
@@ -69,9 +68,10 @@ class EcoFlowAPI:
         signature = self._generate_signature(params, nonce, timestamp, method)
         
         # Log for debugging
-        _LOGGER.debug(f"Request to {endpoint} ({method})")
-        _LOGGER.debug(f"Params: {params}")
-        _LOGGER.debug(f"Generated signature: {signature}")
+        _LOGGER.info(f"Request to {endpoint} ({method})")
+        _LOGGER.info(f"Params: {params}")
+        _LOGGER.info(f"Nonce: {nonce}, Timestamp: {timestamp}")
+        _LOGGER.info(f"Generated signature: {signature}")
         
         # Prepare headers
         headers = {
@@ -96,7 +96,7 @@ class EcoFlowAPI:
             response.raise_for_status()
             
             result = response.json()
-            _LOGGER.debug(f"Response: {result}")
+            _LOGGER.info(f"API Response: {result}")
             
             return result
         except Exception as e:
@@ -228,4 +228,4 @@ class EcoFlowAPI:
             response = self._make_request("/iot-open/sign/device/quota", params, method="POST")
             return response.get("code") == "0"
         except Exception:
-            return F
+            return False
