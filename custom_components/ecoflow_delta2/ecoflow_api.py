@@ -24,11 +24,18 @@ class EcoFlowAPI:
         self.base_url = API_BASE_URL[region]
         self.session = requests.Session()
 
-    def _generate_signature(self, params: Dict[str, Any], nonce: str, timestamp: str) -> str:
+    def _generate_signature(self, params: Dict[str, Any], nonce: str, timestamp: str, method: str = "GET") -> str:
         """Generate HMAC signature for API request."""
-        # Build sign string: sn=xxx&accessKey=xxx&nonce=xxx&timestamp=xxx
-        # Only include simple parameters, no nested objects
-        sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+        # For GET requests: only sn
+        # For POST requests: include all params as JSON
+        if method == "GET":
+            sign_str = f"accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+        else:
+            # For POST, include the full params as JSON string
+            params_json = json.dumps(params, separators=(',', ':'), ensure_ascii=False)
+            sign_str = f"{params_json}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+        
+        _LOGGER.debug(f"Sign string for {method}: {sign_str}")
         
         # Generate HMAC-SHA256 signature
         signature = hmac.new(
@@ -59,12 +66,11 @@ class EcoFlowAPI:
         _LOGGER.debug(f"Generated nonce: {nonce}, timestamp: {timestamp}")
         
         # Generate signature
-        signature = self._generate_signature(params, nonce, timestamp)
+        signature = self._generate_signature(params, nonce, timestamp, method)
         
         # Log for debugging
-        _LOGGER.debug(f"Request to {endpoint}")
+        _LOGGER.debug(f"Request to {endpoint} ({method})")
         _LOGGER.debug(f"Params: {params}")
-        _LOGGER.debug(f"Signature string: sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}")
         _LOGGER.debug(f"Generated signature: {signature}")
         
         # Prepare headers
