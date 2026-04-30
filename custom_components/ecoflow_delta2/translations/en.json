@@ -19,5 +19,75 @@
     "abort": {
       "already_configured": "This device is already configured"
     }
+  },
+  "entity": {
+    "sensor": {
+      "battery_level": {
+        "name": "Battery Level"
+      },
+      "battery_temp": {
+        "name": "Battery Temperature"
+      }
+    },
+    "switch": {
+      "ac_enabled": {
+        "name": "AC Output"
+      },
+      "dc_enabled": {
+        "name": "DC Output"
+      },
+      "xboost_enabled": {
+        "name": "X-Boost"
+      },
+      "beeper_enabled": {
+        "name": "Beeper"
+      },
+      "backup_reserve_enabled": {
+        "name": "Backup Reserve"
+      },
+      "solar_charging_priority": {
+        "name": "Solar Charging Priority"
+      },
+      "ac_always_on": {
+        "name": "AC Always On"
+      }
+    },
+    "number": {
+      "max_charge_soc": {
+        "name": "Max Charge Level"
+      },
+      "min_discharge_soc": {
+        "name": "Min Discharge Level"
+      },
+      "charge_power_ac": {
+        "name": "AC Charge Power Limit"
+      },
+      "backup_reserve_level": {
+        "name": "Backup Reserve Level"
+      },
+      "generator_auto_start_level": {
+        "name": "Generator Auto Start Level"
+      },
+      "generator_auto_stop_level": {
+        "name": "Generator Auto Stop Level"
+      }
+    },
+    "select": {
+      "screen_timeout": {
+        "name": "Screen Timeout"
+      },
+      "ac_timeout": {
+        "name": "AC Timeout"
+      },
+      "dc_timeout": {
+        "name": "DC Timeout"
+      },
+      "unit_timeout": {
+        "name": "Unit Timeout"
+      },
+      "dc_charge_current": {
+        "name": "DC Charge Current"
+      }
+    }
   }
 }
