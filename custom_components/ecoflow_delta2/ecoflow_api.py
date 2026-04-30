@@ -78,20 +78,27 @@ class EcoFlowAPI:
         # Make request
         url = f"{self.base_url}{endpoint}"
         
-        if method == "GET":
-            # For GET requests, add sn as query parameter
-            response = self.session.get(url, params={"sn": params["sn"]}, headers=headers, timeout=10)
-        else:
-            # For POST requests, send as JSON body
-            headers["Content-Type"] = "application/json"
-            response = self.session.post(url, json=params, headers=headers, timeout=10)
-        
-        response.raise_for_status()
-        
-        result = response.json()
-        _LOGGER.debug(f"Response: {result}")
-        
-        return result
+        try:
+            if method == "GET":
+                # For GET requests, add sn as query parameter
+                response = self.session.get(url, params={"sn": params["sn"]}, headers=headers, timeout=10)
+            else:
+                # For POST requests, send as JSON body
+                headers["Content-Type"] = "application/json"
+                response = self.session.post(url, json=params, headers=headers, timeout=10)
+            
+            response.raise_for_status()
+            
+            result = response.json()
+            _LOGGER.debug(f"Response: {result}")
+            
+            return result
+        except Exception as e:
+            _LOGGER.error(f"API request failed: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                _LOGGER.error(f"Response status: {e.response.status_code}")
+                _LOGGER.error(f"Response body: {e.response.text}")
+            raise
 
     def get_device_data(self) -> Dict[str, Any]:
         """Get device data from API."""
