@@ -31,15 +31,11 @@ class EcoFlowAPI:
             # GET: sn + accessKey + nonce + timestamp
             sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         else:
-            # POST: Try including sorted params before accessKey
-            # Sort params and create query string
-            sorted_params = []
-            for key in sorted(params.keys()):
-                if key != 'params':  # Skip nested params
-                    sorted_params.append(f"{key}={params[key]}")
-            
-            params_str = "&".join(sorted_params)
-            sign_str = f"{params_str}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            # POST: Try including cmdCode and sn in signature
+            # Format: cmdCode=XXX&sn=YYY&accessKey=ZZZ&nonce=AAA&timestamp=BBB
+            cmdCode = params.get('cmdCode', '')
+            sn = params.get('sn', '')
+            sign_str = f"cmdCode={cmdCode}&sn={sn}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         
         _LOGGER.info(f"Sign string for {method}: {sign_str}")
         
@@ -226,4 +222,13 @@ class EcoFlowAPI:
         params = {
             "sn": self.device_sn,
             "cmdCode": "WN511_SET_AC_CHG_WATTS",
-            "par
+            "params": {
+                "chgWatts": watts
+            }
+        }
+        
+        try:
+            response = self._make_request("/iot-open/sign/device/quota", params, method="POST")
+            return response.get("code") == "0"
+        except Exception:
+            return False
