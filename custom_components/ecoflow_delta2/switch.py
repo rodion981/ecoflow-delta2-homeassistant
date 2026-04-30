@@ -37,6 +37,24 @@ SWITCH_TYPES = {
         "icon": "mdi:volume-high",
         "command": "set_beeper",
     },
+    "backup_reserve_enabled": {
+        "name": "Backup Reserve",
+        "key": "pd.watchIsConfig",
+        "icon": "mdi:shield-battery",
+        "command": "set_backup_reserve",
+    },
+    "solar_charging_priority": {
+        "name": "Solar Charging Priority",
+        "key": "pd.pvChgPrioSet",
+        "icon": "mdi:solar-power-variant",
+        "command": "set_solar_priority",
+    },
+    "ac_always_on": {
+        "name": "AC Always On",
+        "key": "pd.acAutoOutConfig",
+        "icon": "mdi:power-plug",
+        "command": "set_ac_always_on",
+    },
 }
 
 
