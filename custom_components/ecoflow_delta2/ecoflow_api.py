@@ -231,4 +231,3 @@ class EcoFlowAPI:
             return response.get("code") == "0"
         except Exception:
             return False
-
