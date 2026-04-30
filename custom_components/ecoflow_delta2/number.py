@@ -127,6 +127,10 @@ class EcoFlowDelta2Number(CoordinatorEntity, NumberEntity):
 
     async def async_set_native_value(self, value: float) -> None:
         """Set new value."""
+        import logging
+        _LOGGER = logging.getLogger(__name__)
+        _LOGGER.info(f"Setting {self._number_type} to {value}")
+        
         command_name = self._number_info["command"]
         
         # Call API method to set the value
@@ -134,5 +138,9 @@ class EcoFlowDelta2Number(CoordinatorEntity, NumberEntity):
             command = getattr(self._api, command_name)
             success = await self.hass.async_add_executor_job(command, int(value))
             
+            _LOGGER.info(f"Command result for {self._number_type}: {success}")
+            
             if success:
                 await self.coordinator.async_request_refresh()
+            else:
+                _LOGGER.error(f"Failed to set {self._number_type} to {value}")
