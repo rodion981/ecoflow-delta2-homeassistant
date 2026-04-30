@@ -7,6 +7,7 @@ from homeassistant.const import PERCENTAGE, UnitOfPower, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.entity import EntityCategory
 
 from .const import DOMAIN
 
@@ -41,6 +42,36 @@ NUMBER_TYPES = {
         "step": 100,
         "icon": "mdi:flash",
         "command": "set_ac_charge_power",
+    },
+    "backup_reserve_level": {
+        "name": "Backup Reserve Level",
+        "key": "pd.bpPowerSoc",
+        "unit": PERCENTAGE,
+        "min": 5,
+        "max": 100,
+        "step": 1,
+        "icon": "mdi:battery-heart",
+        "command": "set_backup_reserve_level",
+    },
+    "generator_auto_start_level": {
+        "name": "Generator Auto Start Level",
+        "key": "bms_emsStatus.minOpenOilEb",
+        "unit": PERCENTAGE,
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "icon": "mdi:engine",
+        "command": "set_generator_auto_start",
+    },
+    "generator_auto_stop_level": {
+        "name": "Generator Auto Stop Level",
+        "key": "bms_emsStatus.maxCloseOilEb",
+        "unit": PERCENTAGE,
+        "min": 50,
+        "max": 100,
+        "step": 1,
+        "icon": "mdi:engine-off",
+        "command": "set_generator_auto_stop",
     },
 }
 
@@ -87,6 +118,7 @@ class EcoFlowDelta2Number(CoordinatorEntity, NumberEntity):
         self._attr_mode = NumberMode.SLIDER
         self._attr_has_entity_name = True
         self._attr_translation_key = number_type
+        self._attr_entity_category = EntityCategory.CONFIG
         self._entry = entry
 
     @property
