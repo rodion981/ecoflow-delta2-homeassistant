@@ -203,6 +203,15 @@
       },
       "beeper_enabled": {
         "name": "Звуковий сигнал"
+      },
+      "backup_reserve_enabled": {
+        "name": "Резервне живлення"
+      },
+      "solar_charging_priority": {
+        "name": "Пріоритет сонячного заряду"
+      },
+      "ac_always_on": {
+        "name": "AC завжди увімкнено"
       }
     },
     "number": {
@@ -214,6 +223,32 @@
       },
       "charge_power_ac": {
         "name": "Ліміт потужності AC заряду"
+      },
+      "backup_reserve_level": {
+        "name": "Рівень резервного живлення"
+      },
+      "generator_auto_start_level": {
+        "name": "Рівень автозапуску генератора"
+      },
+      "generator_auto_stop_level": {
+        "name": "Рівень автозупинки генератора"
+      }
+    },
+    "select": {
+      "screen_timeout": {
+        "name": "Таймаут екрану"
+      },
+      "ac_timeout": {
+        "name": "Таймаут AC"
+      },
+      "dc_timeout": {
+        "name": "Таймаут DC"
+      },
+      "unit_timeout": {
+        "name": "Таймаут пристрою"
+      },
+      "dc_charge_current": {
+        "name": "Струм DC заряду"
       }
     }
   }
