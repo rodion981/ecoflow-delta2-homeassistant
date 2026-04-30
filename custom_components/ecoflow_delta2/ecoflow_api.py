@@ -27,8 +27,8 @@ class EcoFlowAPI:
     def _generate_signature(self, params: Dict[str, Any], nonce: str, timestamp: str, method: str = "GET") -> str:
         """Generate HMAC signature for API request."""
         if method == "GET":
-            # GET: only accessKey + nonce + timestamp (without sn)
-            sign_str = f"accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
+            # GET: sn + accessKey + nonce + timestamp
+            sign_str = f"sn={params['sn']}&accessKey={self.access_key}&nonce={nonce}&timestamp={timestamp}"
         else:
             # POST: include all params as JSON string
             # Format: {params_json}&accessKey={key}&nonce={nonce}&timestamp={timestamp}
@@ -228,4 +228,4 @@ class EcoFlowAPI:
             response = self._make_request("/iot-open/sign/device/quota", params, method="POST")
             return response.get("code") == "0"
         except Exception:
-            return False
+            return F
